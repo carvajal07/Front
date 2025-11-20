@@ -1,5 +1,18 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react';
-import './LoginPage.css';
+import React, { useState, FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Box,
+  Paper,
+  TextField,
+  Button,
+  Typography,
+  Link,
+  InputAdornment,
+  IconButton,
+  Divider,
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 interface FormErrors {
   email?: string;
@@ -12,6 +25,7 @@ interface FormData {
 }
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     email: '',
     password: ''
@@ -60,29 +74,31 @@ export const LoginPage = () => {
   };
 
   // Manejar cambios en los inputs
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (field: keyof FormData) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
 
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [field]: value
     }));
 
     // Validar en tiempo real si el campo ya fue tocado
-    if (touched[name as keyof typeof touched]) {
-      const error = name === 'email'
+    if (touched[field]) {
+      const error = field === 'email'
         ? validateEmail(value)
         : validatePassword(value);
 
       setErrors(prev => ({
         ...prev,
-        [name]: error
+        [field]: error
       }));
     }
   };
 
   // Manejar cuando el usuario sale de un campo
-  const handleBlur = (field: 'email' | 'password') => {
+  const handleBlur = (field: 'email' | 'password') => () => {
     setTouched(prev => ({
       ...prev,
       [field]: true
@@ -131,125 +147,124 @@ export const LoginPage = () => {
     }
   };
 
-  // Manejar navegación a recuperar contraseña
-  const handleForgotPassword = () => {
-    // TODO: Implementar navegación a página de recuperar contraseña
-    console.log('Navegar a recuperar contraseña');
-    alert('Redirigir a recuperar contraseña (Implementar navegación)');
-  };
-
-  // Manejar navegación a registro
-  const handleRegister = () => {
-    // TODO: Implementar navegación a página de registro
-    console.log('Navegar a registro');
-    alert('Redirigir a página de registro (Implementar navegación)');
-  };
-
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <div className="login-header">
-          <h1>Iniciar Sesión</h1>
-          <p>Ingresa tus credenciales para acceder</p>
-        </div>
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          py: 4,
+        }}
+      >
+        <Paper elevation={6} sx={{ p: 4, width: '100%' }}>
+          <Typography variant="h4" component="h1" gutterBottom align="center" fontWeight="bold">
+            Iniciar Sesión
+          </Typography>
+          <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 3 }}>
+            Ingresa tus credenciales para acceder
+          </Typography>
 
-        <form onSubmit={handleSubmit} noValidate>
-          {/* Campo de Email */}
-          <div className="form-group">
-            <label htmlFor="email">
-              Correo Electrónico
-            </label>
-            <input
-              type="email"
-              id="email"
+          <form onSubmit={handleSubmit} noValidate>
+            {/* Campo de Email */}
+            <TextField
+              fullWidth
+              label="Correo Electrónico"
               name="email"
+              type="email"
               value={formData.email}
-              onChange={handleChange}
-              onBlur={() => handleBlur('email')}
-              className={errors.email && touched.email ? 'input-error' : ''}
-              placeholder="tu@email.com"
-              aria-invalid={errors.email && touched.email ? 'true' : 'false'}
-              aria-describedby={errors.email && touched.email ? 'email-error' : undefined}
+              onChange={handleChange('email')}
+              onBlur={handleBlur('email')}
+              error={!!errors.email && touched.email}
+              helperText={touched.email ? errors.email : ''}
               disabled={isSubmitting}
+              margin="normal"
+              placeholder="tu@email.com"
+              required
+              autoComplete="email"
             />
-            {errors.email && touched.email && (
-              <span className="error-message" id="email-error" role="alert">
-                {errors.email}
-              </span>
-            )}
-          </div>
 
-          {/* Campo de Contraseña */}
-          <div className="form-group">
-            <label htmlFor="password">
-              Contraseña
-            </label>
-            <div className="password-input-wrapper">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                onBlur={() => handleBlur('password')}
-                className={errors.password && touched.password ? 'input-error' : ''}
-                placeholder="••••••••"
-                aria-invalid={errors.password && touched.password ? 'true' : 'false'}
-                aria-describedby={errors.password && touched.password ? 'password-error' : undefined}
-                disabled={isSubmitting}
-              />
-              <button
+            {/* Campo de Contraseña */}
+            <TextField
+              fullWidth
+              label="Contraseña"
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              value={formData.password}
+              onChange={handleChange('password')}
+              onBlur={handleBlur('password')}
+              error={!!errors.password && touched.password}
+              helperText={touched.password ? errors.password : ''}
+              disabled={isSubmitting}
+              margin="normal"
+              placeholder="••••••••"
+              required
+              autoComplete="current-password"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      onMouseDown={(e) => e.preventDefault()}
+                      edge="end"
+                      disabled={isSubmitting}
+                      aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            {/* Enlace de recuperar contraseña */}
+            <Box sx={{ textAlign: 'right', mt: 1, mb: 2 }}>
+              <Link
+                component="button"
                 type="button"
-                className="toggle-password"
-                onClick={() => setShowPassword(!showPassword)}
-                aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                variant="body2"
+                onClick={() => navigate('/forgot-password')}
                 disabled={isSubmitting}
+                sx={{ cursor: 'pointer' }}
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
-              </button>
-            </div>
-            {errors.password && touched.password && (
-              <span className="error-message" id="password-error" role="alert">
-                {errors.password}
-              </span>
-            )}
-          </div>
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </Box>
 
-          {/* Enlace de recuperar contraseña */}
-          <div className="forgot-password-wrapper">
-            <button
-              type="button"
-              className="link-button"
-              onClick={handleForgotPassword}
+            {/* Botón de Submit */}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              size="large"
+              disabled={isSubmitting}
+              sx={{ mt: 1, mb: 2 }}
+            >
+              {isSubmitting ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            </Button>
+          </form>
+
+          {/* Divider */}
+          <Divider sx={{ my: 3 }} />
+
+          {/* Sección de registro */}
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              ¿No tienes una cuenta?
+            </Typography>
+            <Button
+              fullWidth
+              variant="outlined"
+              size="large"
+              onClick={() => navigate('/register')}
               disabled={isSubmitting}
             >
-              ¿Olvidaste tu contraseña?
-            </button>
-          </div>
-
-          {/* Botón de Submit */}
-          <button
-            type="submit"
-            className="submit-button"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-          </button>
-        </form>
-
-        {/* Sección de registro */}
-        <div className="register-section">
-          <p>¿No tienes una cuenta?</p>
-          <button
-            type="button"
-            className="register-button"
-            onClick={handleRegister}
-            disabled={isSubmitting}
-          >
-            Crear cuenta
-          </button>
-        </div>
-      </div>
-    </div>
+              Crear cuenta
+            </Button>
+          </Box>
+        </Paper>
+      </Box>
+    </Container>
   );
 };
