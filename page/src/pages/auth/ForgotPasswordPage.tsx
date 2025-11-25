@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Container,
   Box,
   Paper,
   TextField,
@@ -12,7 +11,7 @@ import {
   Alert,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
-import { ThemeToggle } from '../../components/ThemeToggle';
+import { AuthLayout } from '../../components/AuthLayout';
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
@@ -70,25 +69,8 @@ export const ForgotPasswordPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'background.default',
-        position: 'relative',
-      }}
-    >
-      <ThemeToggle
-        sx={{
-          position: 'absolute',
-          top: 16,
-          right: 16,
-        }}
-      />
-      <Container maxWidth="sm" sx={{ display: 'flex', justifyContent: 'center', px: 2 }}>
-        <Paper
+    <AuthLayout>
+      <Paper
           elevation={6}
           sx={{
             p: 4,
@@ -239,7 +221,6 @@ export const ForgotPasswordPage = () => {
             </Typography>
           </Box>
         </Paper>
-      </Container>
-    </Box>
+    </AuthLayout>
   );
 };

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Container,
   Box,
   Paper,
   TextField,
@@ -14,7 +13,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { ThemeToggle } from '../../components/ThemeToggle';
+import { AuthLayout } from '../../components/AuthLayout';
 
 interface FormData {
   name: string;
@@ -150,25 +149,8 @@ export const RegisterPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'background.default',
-        position: 'relative',
-      }}
-    >
-      <ThemeToggle
-        sx={{
-          position: 'absolute',
-          top: 16,
-          right: 16,
-        }}
-      />
-      <Container maxWidth="sm" sx={{ display: 'flex', justifyContent: 'center', px: 2 }}>
-        <Paper
+    <AuthLayout>
+      <Paper
           elevation={6}
           sx={{
             p: 4,
@@ -365,7 +347,6 @@ export const RegisterPage = () => {
             </Typography>
           </Box>
         </Paper>
-      </Container>
-    </Box>
+    </AuthLayout>
   );
 };
