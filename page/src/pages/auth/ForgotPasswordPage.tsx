@@ -12,6 +12,7 @@ import {
   Alert,
 } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
+import { ThemeToggle } from '../../components/ThemeToggle';
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
@@ -75,9 +76,17 @@ export const ForgotPasswordPage = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundImage: 'linear-gradient(135deg, #0a1628 0%, #1a2742 100%)',
+        backgroundColor: 'background.default',
+        position: 'relative',
       }}
     >
+      <ThemeToggle
+        sx={{
+          position: 'absolute',
+          top: 16,
+          right: 16,
+        }}
+      />
       <Container maxWidth="sm" sx={{ display: 'flex', justifyContent: 'center', px: 2 }}>
         <Paper
           elevation={6}
