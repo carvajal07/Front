@@ -1,4 +1,5 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState } from 'react';
+import type { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -156,13 +157,46 @@ export const RegisterPage = () => {
           alignItems: 'center',
           justifyContent: 'center',
           py: 4,
+          backgroundImage: 'linear-gradient(135deg, #0a1628 0%, #1a2742 100%)',
         }}
       >
-        <Paper elevation={6} sx={{ p: 4, width: '100%' }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center" fontWeight="bold">
+        <Paper
+          elevation={6}
+          sx={{
+            p: 4,
+            width: '100%',
+            backgroundColor: 'background.paper',
+            border: '2px solid',
+            borderColor: 'rgba(74, 159, 184, 0.3)',
+            boxShadow: '0 0 40px rgba(0, 195, 255, 0.2)',
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              borderColor: 'info.main',
+              boxShadow: '0 0 60px rgba(0, 195, 255, 0.4)',
+              transform: 'translateY(-4px)',
+            }
+          }}
+        >
+          <Typography
+            variant="h4"
+            component="h1"
+            gutterBottom
+            align="center"
+            fontWeight="bold"
+            sx={{
+              color: 'info.main',
+              textShadow: '0 0 20px rgba(0, 195, 255, 0.6)',
+              mb: 2,
+            }}
+          >
             Crear Cuenta
           </Typography>
-          <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 3 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            align="center"
+            sx={{ mb: 3 }}
+          >
             Completa el formulario para registrarte
           </Typography>
 
@@ -260,7 +294,15 @@ export const RegisterPage = () => {
               variant="contained"
               size="large"
               disabled={isSubmitting}
-              sx={{ mt: 3, mb: 2 }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                boxShadow: '0 0 20px rgba(0, 195, 255, 0.3)',
+                '&:hover': {
+                  boxShadow: '0 0 35px rgba(0, 195, 255, 0.6)',
+                  transform: 'translateY(-2px)',
+                }
+              }}
             >
               {isSubmitting ? 'Registrando...' : 'Crear Cuenta'}
             </Button>
@@ -273,7 +315,14 @@ export const RegisterPage = () => {
                 component="button"
                 variant="body2"
                 onClick={() => navigate('/login')}
-                sx={{ cursor: 'pointer' }}
+                sx={{
+                  cursor: 'pointer',
+                  color: 'info.main',
+                  textDecoration: 'none',
+                  '&:hover': {
+                    textShadow: '0 0 10px rgba(0, 195, 255, 0.6)',
+                  }
+                }}
               >
                 Inicia sesión aquí
               </Link>
