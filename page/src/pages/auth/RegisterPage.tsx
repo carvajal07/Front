@@ -149,17 +149,16 @@ export const RegisterPage = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box
-        sx={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          py: 4,
-          backgroundImage: 'linear-gradient(135deg, #0a1628 0%, #1a2742 100%)',
-        }}
-      >
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundImage: 'linear-gradient(135deg, #0a1628 0%, #1a2742 100%)',
+      }}
+    >
+      <Container maxWidth="sm" sx={{ display: 'flex', justifyContent: 'center', px: 2 }}>
         <Paper
           elevation={6}
           sx={{
@@ -218,6 +217,13 @@ export const RegisterPage = () => {
               disabled={isSubmitting}
               margin="normal"
               required
+              placeholder="Juan Pérez"
+              sx={{
+                '& .MuiInputBase-input::placeholder': {
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  opacity: 1,
+                }
+              }}
             />
 
             <TextField
@@ -232,6 +238,13 @@ export const RegisterPage = () => {
               disabled={isSubmitting}
               margin="normal"
               required
+              placeholder="tu@email.com"
+              sx={{
+                '& .MuiInputBase-input::placeholder': {
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  opacity: 1,
+                }
+              }}
             />
 
             <TextField
@@ -246,6 +259,13 @@ export const RegisterPage = () => {
               disabled={isSubmitting}
               margin="normal"
               required
+              placeholder="••••••••"
+              sx={{
+                '& .MuiInputBase-input::placeholder': {
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  opacity: 1,
+                }
+              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -273,6 +293,13 @@ export const RegisterPage = () => {
               disabled={isSubmitting}
               margin="normal"
               required
+              placeholder="••••••••"
+              sx={{
+                '& .MuiInputBase-input::placeholder': {
+                  color: 'rgba(255, 255, 255, 0.5)',
+                  opacity: 1,
+                }
+              }}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -329,7 +356,7 @@ export const RegisterPage = () => {
             </Typography>
           </Box>
         </Paper>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 };
