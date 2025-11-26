@@ -3,6 +3,7 @@ import { CssBaseline } from '@mui/material';
 import { LoginPage } from './pages/auth/LoginPage';
 import { RegisterPage } from './pages/auth/RegisterPage';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
+import { AdminPage } from './pages/admin/AdminPage';
 import { ThemeProvider } from './contexts/ThemeContext';
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+          {/* Ruta de administración */}
+          <Route path="/admin" element={<AdminPage />} />
 
           {/* Ruta para páginas no encontradas */}
           <Route path="*" element={<Navigate to="/login" replace />} />
